@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login & Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Registration</h1>
+                {% if messages %}
+                    <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="form-group">
+                    <form action="/register" method="POST">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                        <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="email" class="form-control" name="email" placeholder="Email">
+                            </div>
+                            <div class="col">
+                                <input type="date" class="form-control" name="birthday" placeholder="Birthday">
+                            </div>
+                        </div>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="pw_confirm" placeholder="Confirm Password"><br>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>    
+            <div class="col">
+                <h1>Login</h1>
+                <div class="form-group">
+                    <form action="/login" method="POST">
+                        {% csrf_token %}
+                        <input type="email" class="form-control" name="email" placeholder="Email">
+                        <input type="password" class="form-control" name="password" placeholder="Password"><br>
+                        <button type="submit" class="btn btn-primary">Log In</button>
+                    </form>
+                </div>    
+            </div>
+        </div>  
+    </div>
+</body>
+</html>

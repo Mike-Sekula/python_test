@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container-fluid mb-3" class="alert alert-secondary" style="background-color: lightblue;">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <h1>Welcome {{user.first_name}}!</h1>
+                </div>
+                <div class="col-2">
+                    <a href="/trip/create">Create a Trip</a>
+                </div>
+                <div class="col-2">
+                    <a href="/logout">Log Out</a>
+                </div>
+            </div>
+        </div>    
+    </div>    
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                {% if messages %}
+                    {% for message in messages %}
+                    <ul class="messages">
+                        <li>{{message}}</li>
+                    </ul>
+                    {% endfor %}
+                {% endif %}
+                <h2>Your Trip Schedules</h2>
+            </div>
+        </div>
+        <div class="row mx-auto">
+            <div class="col">
+                <table class="my_trips">
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for trip in user.trips_attending.all %}
+                    <tr style="max-height: 30px;">
+                        <td><a href="/trip/{{trip.id}}">{{trip.destination}}</a></td>
+                        <td>{{trip.date_from}}</td>
+                        <td>{{trip.date_to}}</td>
+                        <td style="max-width: 500px;">{{trip.plan}}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col">
+                                <form action="/trip/remove/{{trip.id}}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Cancel</button>
+                                </form>
+                                </div>
+                                {% if trip in user.created_trips.all %}
+                                <div class="col">
+                                    <form action="/trip/delete/{{trip.id}}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </form>
+                                {% endif %}
+                                </td>
+                                </div>
+                            </div>
+                    {% endfor %}    
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="bot_container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Other Users' Travel Plans</h3>
+                </div>
+            </div>
+            <div class="row mx-auto">
+                <div class="col">
+                    <table class="other_trips">
+                        <tr>
+                            <th>Destination</th>
+                            <th>Travel Start Date</th>
+                            <th>Travel End Date</th>
+                            <th>Do You Want To Join?</th>
+                        </tr>
+                        {% for trip in trips %}
+                            {% if trip not in user.trips_attending.all %}
+                        <tr>
+                            <td><a href="/trip/{{trip.id}}">{{trip.destination}}</a></td>
+                            <td>{{trip.date_from}}</td>
+                            <td>{{trip.date_to}}</td>
+                            <td><form action="/trip/join/{{trip.id}}" method="POST">
+                                    {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Join</button>
+                                </form></td>
+                        </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>

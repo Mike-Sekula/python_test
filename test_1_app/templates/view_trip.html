@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>View Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="line">
+            <div class="row">
+                <div class="col-8">
+                </div>
+                <div class="col-2">
+                    <a href="/success">Back</a>
+                </div>
+                <div class="col-2">
+                        <a href="/logout">Log Out</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h2 style="font-weight: bold; color: royalblue;">{{trip.destination}}</h2>
+            <label class="mr-2" style="display: inline-block;">Planned by:</label><p style="display: inline-block; font-style: italic;">{{trip.creator.first_name}} {{trip.creator.last_name}}</p><br>
+            <label class="mr-2" style="display: inline-block;">Plan:</label><p style="display: inline-block; font-style: italic;">{{trip.plan}}</p><br>
+            <label class="mr-2" style="display: inline-block;">Travel Date From:</label><p style="display: inline-block; font-style: italic;">{{trip.date_from}}</p><br>
+            <label class="mr-2" style="display: inline-block;">Travel Date To:</label><p style="display: inline-block; font-style: italic;">{{trip.date_to}}</p>
+        </div>
+        <div class="col-6">
+            <h2 style="color:steelblue;">Other Users Joining The Trip:</h2>
+            {% for user in trip.attendees.all %}
+                {% if user.id != trip.creator.id %}
+            <ul>
+                <li style="font-style: italic;">{{user.first_name}} {{user.last_name}}</li>
+            </ul>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

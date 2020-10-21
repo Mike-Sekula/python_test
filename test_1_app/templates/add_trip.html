@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add a Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="line">
+            <div class="row">
+                <div class="col-8 mt-3">
+                    <h1>Add A Trip</h1>
+                </div>
+                <div class="col-2">
+                    <a href="/success">Back</a>
+                </div>
+                <div class="col-2">
+                        <a href="/logout">Log Out</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            {% if messages %}
+                {% for message in messages %}
+                <ul class="messages">
+                    <li>{{message}}</li>
+                </ul>
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
+                <form action="/trip/add" method="POST">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" name="destination" placeholder="Destination">
+                    <input type="text" class="form-control" name="plan" placeholder="Plan">
+                    <br>
+                    <label>Travel Date From:</label>
+                    <input type="date" class="form-control" name="date_from" placeholder="Travel Date From">
+                    <label>Travel Date To:</label>
+                    <input type="date" class="form-control" name="date_to" placeholder="Travel Date To">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>    
+        </div>
+    </div>
+</body>
+</html>

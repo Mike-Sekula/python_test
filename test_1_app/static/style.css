@@ -1,0 +1,35 @@
+table, th, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, tr, td {
+    padding: 5px;
+}
+
+.my_trips {
+    width: 1200px;
+    margin-bottom: 20px;
+}
+
+.other_trips {
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.bot_container {
+    width: 900px;
+    margin: auto;
+}
+
+tr:nth-child(even) {
+    background-color: whitesmoke;
+}
+
+tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+label {
+    width: 150px;
+}
